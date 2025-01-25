@@ -25,7 +25,7 @@ var last_angle := 0.0
 @onready var jump_cooldown_timer = $JumpCooldownTimer
 @onready var shoot_cooldown_timer = $ShootCooldownTimer
 @onready var shadow = $Shadow
-@onready var muzzle = $Muzzle
+@onready var muzzle = $Sprite2D/Muzzle
 @onready var animation_player = $AnimationPlayer
 
 func _ready():
@@ -37,10 +37,12 @@ func _physics_process(delta: float) -> void:
 
 	# Handle flip sprite for horizontal movement direction
 	if direction_x < 0:
-		$Sprite2D.flip_h = true 
+		$Sprite2D.flip_h = true
+		muzzle.position.x = -abs(muzzle.position.x)
 	elif direction_x > 0:
 		$Sprite2D.flip_h = false
-
+		muzzle.position.x = abs(muzzle.position.x)
+		
 	# Set vertical direction
 	var direction_y := Input.get_axis("move-up", "move-down")
 

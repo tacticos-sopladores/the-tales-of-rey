@@ -1,9 +1,45 @@
-[gd_scene load_steps=9 format=3 uid="uid://cqn86787akru1"]
+[gd_scene load_steps=14 format=3 uid="uid://cqn86787akru1"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_htb0k"]
-[ext_resource type="Texture2D" uid="uid://dy0wpi8qvamb3" path="res://assets/rey.png" id="2_4ddr5"]
 [ext_resource type="PackedScene" uid="uid://sjb77xsfymbk" path="res://scenes/projectile.tscn" id="2_25sf6"]
 [ext_resource type="PackedScene" uid="uid://dvjs47vnfstbt" path="res://scenes/shadow.tscn" id="3_br3t8"]
+[ext_resource type="Texture2D" uid="uid://qkjv0yfs7543" path="res://assets/rey-idle-sheet.png" id="3_prmin"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqcpa"]
+atlas = ExtResource("3_prmin")
+region = Rect2(0, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8c1g"]
+atlas = ExtResource("3_prmin")
+region = Rect2(80, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0lo1b"]
+atlas = ExtResource("3_prmin")
+region = Rect2(160, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h30n2"]
+atlas = ExtResource("3_prmin")
+region = Rect2(240, 0, 80, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2ksxx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vqcpa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b8c1g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0lo1b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h30n2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g4btl"]
 radius = 3.16228
@@ -74,16 +110,18 @@ _data = {
 script = ExtResource("1_htb0k")
 projectile_scene = ExtResource("2_25sf6")
 
+[node name="Sprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+z_index = 5
+sprite_frames = SubResource("SpriteFrames_2ksxx")
+autoplay = "default"
+frame_progress = 0.540854
+
+[node name="Muzzle" type="Node2D" parent="CharacterBody2D/Sprite2D"]
+position = Vector2(8, -14)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_g4btl")
-
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-z_index = 5
-texture = ExtResource("2_4ddr5")
-
-[node name="Muzzle" type="Node2D" parent="CharacterBody2D"]
-position = Vector2(9, -11)
 
 [node name="Shadow" parent="CharacterBody2D" instance=ExtResource("3_br3t8")]
 position = Vector2(0, 7)
