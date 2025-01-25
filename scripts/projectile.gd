@@ -13,8 +13,9 @@ func _ready():
 	#	collision_mask = 2 # PlayerProjectiles Layer
 	#else:
 	#	collision_mask = 4 # EnemyProjectiles Layer
+	animation_player.play("grow")
 	projectile_lifetime_timer.start(lifetime)
-
+	
 func _physics_process(delta):
 	velocity.x += cos(transform.get_rotation()) * speed * delta
 	velocity.y += sin(transform.get_rotation()) * speed * delta
@@ -36,6 +37,8 @@ func _physics_process(delta):
 
 func _on_projectile_lifetime_timer_timeout() -> void:
 	animation_player.play("pop")
-
+	
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	queue_free()
+	if anim_name == "pop":
+		queue_free()
+		

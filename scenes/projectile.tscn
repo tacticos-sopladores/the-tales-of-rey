@@ -1,37 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://sjb77xsfymbk"]
+[gd_scene load_steps=8 format=3 uid="uid://sjb77xsfymbk"]
 
 [ext_resource type="Script" path="res://scripts/projectile.gd" id="1_0v4sd"]
-[ext_resource type="Texture2D" uid="uid://crq7e460qd3ku" path="res://assets/bubble.png" id="2_t6kka"]
+[ext_resource type="Texture2D" uid="uid://bm4luv43gfo0d" path="res://assets/bubble-sheet.png" id="2_ygxyr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ni7yq"]
 radius = 16.0
-
-[sub_resource type="Animation" id="Animation_pd13k"]
-resource_name = "pop"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.1, 0),
-"update": 0,
-"values": [Vector2(0.2, 0.2), Vector2(0.75, 0.75)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape2D:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(0.2, 0),
-"update": 0,
-"values": [Vector2(0.2, 0.2), Vector2(0.75, 0.75)]
-}
 
 [sub_resource type="Animation" id="Animation_r0h60"]
 length = 0.001
@@ -48,10 +21,65 @@ tracks/0/keys = {
 "values": [Vector2(0.2, 0.2)]
 }
 
+[sub_resource type="Animation" id="Animation_pd13k"]
+resource_name = "pop"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.2, 0),
+"update": 0,
+"values": [Vector2(0.2, 0.2), Vector2(0.75, 0.75)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.2, 0),
+"update": 0,
+"values": [Vector2(0.2, 0.2), Vector2(0.75, 0.75)]
+}
+
+[sub_resource type="Animation" id="Animation_nk2sm"]
+resource_name = "pop"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_iab5h"]
 _data = {
 "RESET": SubResource("Animation_r0h60"),
-"pop": SubResource("Animation_pd13k")
+"grow": SubResource("Animation_pd13k"),
+"pop": SubResource("Animation_nk2sm")
 }
 
 [node name="Projectile" type="CharacterBody2D"]
@@ -59,11 +87,12 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_0v4sd")
 speed = 200.0
-lifetime = 0.33
+lifetime = 0.5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
-texture = ExtResource("2_t6kka")
+texture = ExtResource("2_ygxyr")
+hframes = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.2, 0.2)
@@ -71,7 +100,6 @@ shape = SubResource("CircleShape2D_ni7yq")
 
 [node name="ProjectileLifetimeTimer" type="Timer" parent="."]
 one_shot = true
-autostart = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
