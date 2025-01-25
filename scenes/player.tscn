@@ -1,16 +1,54 @@
-[gd_scene load_steps=5 format=3 uid="uid://cqn86787akru1"]
+[gd_scene load_steps=9 format=3 uid="uid://cqn86787akru1"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_htb0k"]
 [ext_resource type="Texture2D" uid="uid://dy0wpi8qvamb3" path="res://assets/rey.png" id="2_4ddr5"]
+[ext_resource type="PackedScene" uid="uid://sjb77xsfymbk" path="res://scenes/projectile.tscn" id="2_25sf6"]
 [ext_resource type="PackedScene" uid="uid://dvjs47vnfstbt" path="res://scenes/shadow.tscn" id="3_br3t8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g4btl"]
 radius = 3.16228
 
+[sub_resource type="Animation" id="Animation_b7pm2"]
+resource_name = "jump"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(0.5, 2, 0),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -20), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ax15b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xjf3j"]
+_data = {
+"RESET": SubResource("Animation_ax15b"),
+"jump": SubResource("Animation_b7pm2")
+}
+
 [node name="Player" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 script = ExtResource("1_htb0k")
+projectile_scene = ExtResource("2_25sf6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 position = Vector2(0, 5)
@@ -20,6 +58,9 @@ shape = SubResource("CircleShape2D_g4btl")
 z_index = 5
 texture = ExtResource("2_4ddr5")
 
+[node name="Muzzle" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(9, -11)
+
 [node name="Shadow" parent="CharacterBody2D" instance=ExtResource("3_br3t8")]
 position = Vector2(0, 7)
 scale = Vector2(0.75, 0.75)
@@ -28,4 +69,13 @@ scale = Vector2(0.75, 0.75)
 wait_time = 0.75
 one_shot = true
 
+[node name="ShootCooldownTimer" type="Timer" parent="CharacterBody2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D"]
+root_node = NodePath("../ShootCooldownTimer")
+libraries = {
+"": SubResource("AnimationLibrary_xjf3j")
+}
+
 [connection signal="timeout" from="CharacterBody2D/JumpCooldownTimer" to="CharacterBody2D" method="_on_jump_cooldown_timer_timeout"]
+[connection signal="timeout" from="CharacterBody2D/ShootCooldownTimer" to="CharacterBody2D" method="_on_shoot_cooldown_timer_timeout"]
