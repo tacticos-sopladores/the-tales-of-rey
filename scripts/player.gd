@@ -13,10 +13,19 @@ var can_jump := true
 @onready var jump_cooldown_timer = $JumpCooldownTimer
 
 func _physics_process(delta: float) -> void:
-		# Handle horizontal movement
+	# Set horizontal direction
 	var direction_x := Input.get_axis("move-left", "move-right")
+	
+	# Handle flip sprite for movement direction
+	if direction_x < 0:
+		$Sprite2D.flip_h = true 
+	elif direction_x > 0:
+		$Sprite2D.flip_h = false
+		
+	# Set vertical direction
 	var direction_y := Input.get_axis("move-up", "move-down")
-
+	
+	# Allow movement if not jumping
 	if not is_jumping:
 		velocity.x = direction_x * SPEED
 		velocity.y = direction_y * SPEED
