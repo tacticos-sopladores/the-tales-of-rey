@@ -1,9 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://cqn86787akru1"]
+[gd_scene load_steps=5 format=3 uid="uid://cqn86787akru1"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_htb0k"]
-[ext_resource type="Texture2D" uid="uid://ciaejvedmvh5g" path="res://icon.svg" id="2_taumf"]
+[ext_resource type="Texture2D" uid="uid://dy0wpi8qvamb3" path="res://assets/rey.png" id="2_4ddr5"]
+[ext_resource type="PackedScene" uid="uid://dvjs47vnfstbt" path="res://scenes/shadow.tscn" id="3_br3t8"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tn3rh"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_g4btl"]
+radius = 3.16228
 
 [node name="Player" type="Node2D"]
 
@@ -11,7 +13,17 @@
 script = ExtResource("1_htb0k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("RectangleShape2D_tn3rh")
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_g4btl")
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-texture = ExtResource("2_taumf")
+z_index = 5
+texture = ExtResource("2_4ddr5")
+
+[node name="Shadow" parent="CharacterBody2D" instance=ExtResource("3_br3t8")]
+position = Vector2(0, 7)
+scale = Vector2(0.75, 0.75)
+
+[node name="JumpCooldown" type="Timer" parent="CharacterBody2D"]
+wait_time = 0.5
+one_shot = true
