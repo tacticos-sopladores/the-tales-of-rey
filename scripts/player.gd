@@ -15,6 +15,7 @@ var current_health: int
 var jump_time := 0.0
 var can_jump := true # Can jump is equivalent to not is_jumping
 var can_shoot := true
+var last_angle := 0.0
 
 @onready var jump_cooldown_timer = $JumpCooldownTimer
 @onready var shoot_cooldown_timer = $ShootCooldownTimer
@@ -37,6 +38,12 @@ func _physics_process(delta: float) -> void:
 
 	# Set vertical direction
 	var direction_y := Input.get_axis("move-up", "move-down")
+
+	# Update last_movement_angle ONLY if there is movement
+	var movement_vector := Vector2(direction_x, direction_y)
+	if movement_vector.length() > 0:
+		last_angle = movement_vector.angle()
+		print(last_angle)
 
 	# Allow movement if not jumping
 	if can_jump:
@@ -61,11 +68,11 @@ func _physics_process(delta: float) -> void:
 			shadow.reset_animation()
 
 	if Input.is_action_just_pressed("shoot"):
-		shoot(direction_x, direction_y)
+		shoot(movement_vector)
 
 	move_and_slide()
 
-func shoot(direction_x: int, direction_y: int):
+func shoot(direction: Vector2):
 	if projectile_scene == null:
 		printerr("Projectile scene not assigned!")
 		return
@@ -75,13 +82,7 @@ func shoot(direction_x: int, direction_y: int):
 	get_tree().root.add_child(projectile_instance)
 
 	projectile_instance.global_position = muzzle.global_position
-
-	# Set projectile direction based on player facing direction
-	if direction_x < 0:
-		projectile_instance.rotation = PI # 180 degrees (facing left)
-	elif direction_x > 0:
-		projectile_instance.rotation = 0.0 # 0 degrees (facing right)
-	
+	projectile_instance.rotation = last_angle
 	projectile_instance.speed = projectile_speed
 	projectile_instance.is_player_projectile = true
 
