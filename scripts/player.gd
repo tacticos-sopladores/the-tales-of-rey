@@ -13,7 +13,7 @@ const SQUISH_AMOUNT = 0.75 # Maximum squish (1 is no squish)
 
 var current_health: int
 var jump_time := 0.0
-var can_jump := true # Can jump is equivalent to not is_jumping
+var can_jump := true
 var can_shoot := true
 var last_angle := 0.0
 
@@ -67,7 +67,7 @@ func _physics_process(delta: float) -> void:
 			enable_invulnerability(false)
 			shadow.reset_animation()
 
-	if Input.is_action_just_pressed("shoot"):
+	if Input.is_action_just_pressed("shoot") and can_shoot:
 		shoot(movement_vector)
 
 	move_and_slide()
@@ -85,6 +85,10 @@ func shoot(direction: Vector2):
 	projectile_instance.rotation = last_angle
 	projectile_instance.speed = projectile_speed
 	projectile_instance.is_player_projectile = true
+	
+	# Start cooldown
+	can_shoot = false
+	shoot_cooldown_timer.start()
 
 func jump() -> void:
 	can_jump = false

@@ -70,6 +70,7 @@ wait_time = 0.75
 one_shot = true
 
 [node name="ShootCooldownTimer" type="Timer" parent="CharacterBody2D"]
+wait_time = 0.5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D"]
 root_node = NodePath("../ShootCooldownTimer")
