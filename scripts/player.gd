@@ -8,9 +8,9 @@ const SQUISH_AMOUNT = 0.95 # Maximum squish (1 is no squish)
 
 var jump_time := 0.0
 var is_jumping := false
-var is_on_cooldown := false
+var can_jump := true
 
-@onready var jump_cooldown_timer = $JumpCooldown
+@onready var jump_cooldown_timer = $JumpCooldownTimer
 
 func _physics_process(delta: float) -> void:
 		# Handle horizontal movement
@@ -22,11 +22,10 @@ func _physics_process(delta: float) -> void:
 		velocity.y = direction_y * SPEED
 	
 	# Trigger the jump animation
-	if Input.is_action_just_pressed("jump") and not is_jumping and not is_on_cooldown:
+	if Input.is_action_just_pressed("jump") and not is_jumping and can_jump:
 		is_jumping = true
-		is_on_cooldown = true
+		can_jump = false
 		jump_cooldown_timer.start()
-		print("Jump cooldown started!")
 		jump_time = 0.0
 
 	# Perform the jump animation
@@ -55,6 +54,6 @@ func do_jump_animation(time: float) -> void:
 	$Sprite2D.position.y = vertical_position
 	$Sprite2D.scale = Vector2(1.0, squish)
 
-func _on_jump_cooldown_timeout() -> void:
-	is_on_cooldown = false
-	print("Cooldown expired!")
+func _on_jump_cooldown_timer_timeout():
+	can_jump = true
+	

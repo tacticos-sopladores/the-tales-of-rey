@@ -24,6 +24,8 @@ texture = ExtResource("2_4ddr5")
 position = Vector2(0, 7)
 scale = Vector2(0.75, 0.75)
 
-[node name="JumpCooldown" type="Timer" parent="CharacterBody2D"]
-wait_time = 0.5
+[node name="JumpCooldownTimer" type="Timer" parent="CharacterBody2D"]
+wait_time = 0.75
 one_shot = true
+
+[connection signal="timeout" from="CharacterBody2D/JumpCooldownTimer" to="CharacterBody2D" method="_on_jump_cooldown_timer_timeout"]
