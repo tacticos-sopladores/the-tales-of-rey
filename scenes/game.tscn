@@ -4,10 +4,9 @@
 
 [node name="Game" type="Node2D"]
 
-[node name="Player" parent="." instance=ExtResource("1_bqwdp")]
-position = Vector2(1, 1)
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(-1, -1)
+[node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_bqwdp")]
+position = Vector2(1, 1)
