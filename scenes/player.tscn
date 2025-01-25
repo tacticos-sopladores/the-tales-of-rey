@@ -8,6 +8,33 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_g4btl"]
 radius = 3.16228
 
+[sub_resource type="Animation" id="Animation_ax15b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_b7pm2"]
 resource_name = "jump"
 tracks/0/type = "value"
@@ -22,20 +49,17 @@ tracks/0/keys = {
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, -20), Vector2(0, 0)]
 }
-
-[sub_resource type="Animation" id="Animation_ax15b"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprite2D:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xjf3j"]
@@ -65,12 +89,14 @@ position = Vector2(9, -11)
 position = Vector2(0, 7)
 scale = Vector2(0.75, 0.75)
 
+[node name="JumpTimer" type="Timer" parent="CharacterBody2D"]
+one_shot = true
+
 [node name="JumpCooldownTimer" type="Timer" parent="CharacterBody2D"]
-wait_time = 0.75
 one_shot = true
 
 [node name="ShootCooldownTimer" type="Timer" parent="CharacterBody2D"]
-wait_time = 0.5
+one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D"]
 root_node = NodePath("../ShootCooldownTimer")
@@ -78,5 +104,6 @@ libraries = {
 "": SubResource("AnimationLibrary_xjf3j")
 }
 
+[connection signal="timeout" from="CharacterBody2D/JumpTimer" to="CharacterBody2D" method="_on_jump_timer_timeout"]
 [connection signal="timeout" from="CharacterBody2D/JumpCooldownTimer" to="CharacterBody2D" method="_on_jump_cooldown_timer_timeout"]
 [connection signal="timeout" from="CharacterBody2D/ShootCooldownTimer" to="CharacterBody2D" method="_on_shoot_cooldown_timer_timeout"]

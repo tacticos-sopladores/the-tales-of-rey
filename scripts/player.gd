@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+# TODO: make cooldown start after landing
+
 # Constants
 const JUMP_DURATION = 0.50
 const JUMP_HEIGHT = 20.0
@@ -10,13 +12,16 @@ const SQUISH_AMOUNT = 0.75 # Maximum squish (1 is no squish)
 @export var max_health: int = 100
 @export var projectile_scene: PackedScene
 @export var projectile_speed: float = 200.0
+@export var shoot_cooldown: float = 0.5
+@export var jump_cooldown: float = 0.75
 
 var current_health: int
-var jump_time := 0.0
 var can_jump := true
+var can_move := true
 var can_shoot := true
 var last_angle := 0.0
 
+@onready var jump_timer = $JumpTimer
 @onready var jump_cooldown_timer = $JumpCooldownTimer
 @onready var shoot_cooldown_timer = $ShootCooldownTimer
 @onready var shadow = $Shadow
@@ -42,30 +47,16 @@ func _physics_process(delta: float) -> void:
 	# Update last_movement_angle ONLY if there is movement
 	var movement_vector := Vector2(direction_x, direction_y)
 	if movement_vector.length() > 0:
-		last_angle = movement_vector.angle()
-		print(last_angle)
+		last_angle = movement_vector.angle()	
 
 	# Allow movement if not jumping
-	if can_jump:
+	if can_move:
 		velocity.x = direction_x * speed
 		velocity.y = direction_y * speed
 
 	# Trigger the jump animation
 	if Input.is_action_just_pressed("jump") and can_jump:
 		jump()
-		
-	# Perform the jump animation
-	if not can_jump:
-		jump_time += delta
-		#do_jump_animation(jump_time)
-		enable_invulnerability(true)
-
-		if jump_time >= JUMP_DURATION:
-			can_jump = true # Reset ability to jump
-			#$Sprite2D.scale = Vector2(1, 1) # Reset scale to normal
-			#$Sprite2D.position = Vector2(0, 0) # Reset position to normal
-			enable_invulnerability(false)
-			shadow.reset_animation()
 
 	if Input.is_action_just_pressed("shoot") and can_shoot:
 		shoot(movement_vector)
@@ -88,17 +79,15 @@ func shoot(direction: Vector2):
 	
 	# Start cooldown
 	can_shoot = false
-	shoot_cooldown_timer.start()
+	shoot_cooldown_timer.start(shoot_cooldown)
 
 func jump() -> void:
 	can_jump = false
-	jump_cooldown_timer.start()
-	jump_time = 0.0
+	can_move = false
+	jump_timer.start(JUMP_DURATION)
 	shadow.play_animation(JUMP_DURATION)
+	animation_player.speed_scale = 1/JUMP_DURATION
 	animation_player.play("jump")
-
-func enable_invulnerability(state: bool) -> void:
-	$CollisionShape2D.disabled = state	
 
 #func take_damage(damage_amount: int):
 #	if not $CollisionShape2D.disabled: # Only take damage if not invulnerable
@@ -111,6 +100,10 @@ func die() -> void:
 	print("Player died!")
 	queue_free() # Or other death logic (e.g., game over screen)
 
+func _on_jump_timer_timeout() -> void:
+	can_move = true
+	jump_cooldown_timer.start(jump_cooldown)
+	
 func _on_jump_cooldown_timer_timeout() -> void:
 	can_jump = true
 
