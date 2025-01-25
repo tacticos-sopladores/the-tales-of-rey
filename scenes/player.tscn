@@ -1,9 +1,17 @@
-[gd_scene format=3 uid="uid://cqn86787akru1"]
+[gd_scene load_steps=4 format=3 uid="uid://cqn86787akru1"]
 
-[node name="Node2D" type="Node2D"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_htb0k"]
+[ext_resource type="Texture2D" uid="uid://ciaejvedmvh5g" path="res://icon.svg" id="2_taumf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tn3rh"]
+
+[node name="Player" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("1_htb0k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_tn3rh")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("2_taumf")
