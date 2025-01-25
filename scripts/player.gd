@@ -85,7 +85,7 @@ func jump() -> void:
 	can_jump = false
 	can_move = false
 	jump_timer.start(JUMP_DURATION)
-	shadow.play_animation(JUMP_DURATION)
+	shadow.play_animation(1/JUMP_DURATION)
 	animation_player.speed_scale = 1/JUMP_DURATION
 	animation_player.play("jump")
 
