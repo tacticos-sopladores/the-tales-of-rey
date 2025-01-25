@@ -16,7 +16,8 @@ func _ready():
 	projectile_lifetime_timer.start()
 
 func _physics_process(delta):
-	position += transform * speed * delta
+	position.x += cos(transform.get_rotation()) * speed * delta
+	position.y += sin(transform.get_rotation()) * speed * delta
 
 #func _on_area_entered(area):
 #	if is_player_projectile:

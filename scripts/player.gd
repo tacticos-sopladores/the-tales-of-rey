@@ -61,28 +61,29 @@ func _physics_process(delta: float) -> void:
 			shadow.reset_animation()
 
 	if Input.is_action_just_pressed("shoot"):
-		shoot()
+		shoot(direction_x, direction_y)
 
 	move_and_slide()
 
-func shoot():
+func shoot(direction_x: int, direction_y: int):
 	if projectile_scene == null:
 		printerr("Projectile scene not assigned!")
 		return
 
+	# Instantiate and add projectile to the scene
 	var projectile_instance = projectile_scene.instantiate()
-	get_tree().root.add_child(projectile_instance) # Add to the scene
+	get_tree().root.add_child(projectile_instance)
 
 	projectile_instance.global_position = muzzle.global_position
 
 	# Set projectile direction based on player facing direction
-	if $Sprite2D.flip_h:
+	if direction_x < 0:
 		projectile_instance.rotation = PI # 180 degrees (facing left)
-	else:
+	elif direction_x > 0:
 		projectile_instance.rotation = 0.0 # 0 degrees (facing right)
-
-	projectile_instance.speed = projectile_speed # Set the speed of the projectile
-	projectile_instance.is_player_projectile = true # This is a player projectile
+	
+	projectile_instance.speed = projectile_speed
+	projectile_instance.is_player_projectile = true
 
 func jump() -> void:
 	can_jump = false

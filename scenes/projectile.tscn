@@ -1,9 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://sjb77xsfymbk"]
 
 [ext_resource type="Script" path="res://scripts/projectile.gd" id="1_0v4sd"]
-[ext_resource type="Texture2D" uid="uid://dvdxql73llvgv" path="res://assets/bubble_1.png" id="2_7mnnn"]
+[ext_resource type="Texture2D" uid="uid://crq7e460qd3ku" path="res://assets/bubble.png" id="2_t6kka"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ni7yq"]
+radius = 16.0
 
 [node name="Projectile" type="Area2D"]
 script = ExtResource("1_0v4sd")
@@ -11,7 +12,7 @@ speed = 50.0
 lifetime = 0.5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_7mnnn")
+texture = ExtResource("2_t6kka")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ni7yq")
