@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://nydhae3ksqg7"]
+
+[ext_resource type="PackedScene" uid="uid://cxvfnbqba7pgj" path="res://scenes/levels/abstract_level.tscn" id="1_mtqmk"]
+[ext_resource type="PackedScene" uid="uid://cqn86787akru1" path="res://scenes/player.tscn" id="2_1jbku"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="3_nxr0u"]
+[ext_resource type="PackedScene" uid="uid://cae45lk281j04" path="res://scenes/enemies/boss1.tscn" id="4_h1mm8"]
+
+[node name="Level-1" type="Node2D"]
+
+[node name="Level0" parent="." instance=ExtResource("1_mtqmk")]
+
+[node name="Camera2D" type="Camera2D" parent="Level0"]
+position = Vector2(591, 356)
+<<<<<<< HEAD
+=======
+zoom = Vector2(0.1, 0.1)
+>>>>>>> origin/main
+script = ExtResource("3_nxr0u")
+
+[node name="Player" parent="Level0" instance=ExtResource("2_1jbku")]
+position = Vector2(589, 352)
+
+[node name="Boss1" parent="." instance=ExtResource("4_h1mm8")]
+position = Vector2(839, 239)

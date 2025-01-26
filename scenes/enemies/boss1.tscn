@@ -1,3 +1,28 @@
-[gd_scene format=3 uid="uid://cae45lk281j04"]
+[gd_scene load_steps=5 format=3 uid="uid://d1kmm0f8kgccs"]
+
+[ext_resource type="Texture2D" uid="uid://cn6mkpxldlfok" path="res://assets/godot.svg" id="1_goopm"]
+[ext_resource type="PackedScene" uid="uid://dvjs47vnfstbt" path="res://scenes/shadow.tscn" id="3_lp81d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3b7sh"]
+size = Vector2(50, 50)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xo733"]
+radius = 52.469
 
 [node name="Boss1" type="Node2D"]
+
+[node name="Boos" type="CharacterBody2D" parent="."]
+
+[node name="sprite" type="Sprite2D" parent="Boos"]
+visible = false
+texture = ExtResource("1_goopm")
+
+[node name="soul" type="CollisionShape2D" parent="Boos"]
+scale = Vector2(2.5, 2.5)
+shape = SubResource("RectangleShape2D_3b7sh")
+
+[node name="body" type="CollisionShape2D" parent="Boos"]
+shape = SubResource("CircleShape2D_xo733")
+
+[node name="Shadow" parent="Boos" instance=ExtResource("3_lp81d")]
+script = null

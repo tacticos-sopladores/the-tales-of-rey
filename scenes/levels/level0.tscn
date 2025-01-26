@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://cxvfnbqba7pgj"]
+[gd_scene load_steps=7 format=3 uid="uid://cn60k4tdvpx86"]
 
-[ext_resource type="Texture2D" uid="uid://bnvwpidwk8ey4" path="res://assets/gradient.png" id="1_j14io"]
+[ext_resource type="Texture2D" uid="uid://ewmsiondl1ef" path="res://assets/gradient.png" id="1_j14io"]
 [ext_resource type="PackedScene" uid="uid://c2q8u6g4yqxkv" path="res://scenes/enemy_spawner.tscn" id="2_wy2kd"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uquif"]

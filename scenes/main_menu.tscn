@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://rbjexyrw8ki8"]
+
+[ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_bwjed"]
+[ext_resource type="Texture2D" uid="uid://xgdt78n4bxw2" path="res://assets/rey_background.png" id="2_13flm"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bwjed")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(558, 411)
+scale = Vector2(0.61412, 0.61412)
+texture = ExtResource("2_13flm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -230.0
+offset_top = 30.0
+offset_right = -30.0
+offset_bottom = 131.0
+grow_horizontal = 0
+alignment = 1
+
+[node name="StartGameButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Begin a new adventure with Rey"
+text = "Start game"
+flat = true
+alignment = 2
+icon_alignment = 2
+
+[node name="HowToPlayButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Learn how to play the game"
+mouse_default_cursor_shape = 16
+text = "How to play"
+flat = true
+alignment = 2
+icon_alignment = 2
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Take a rest and come back later to continue playing with Rey"
+text = "Quit"
+flat = true
+alignment = 2
+
+[connection signal="pressed" from="VBoxContainer/StartGameButton" to="." method="_on_start_game_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
