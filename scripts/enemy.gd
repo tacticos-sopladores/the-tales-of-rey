@@ -44,12 +44,42 @@ const ATTACK_FRAMES := 6
 const HURT_FRAMES := 5
 const DEATH_FRAMES := 6
 
+# Predefined colors for enemy tinting
+const ENEMY_COLORS := [
+	Color(1, 0.5, 0.5, 1), # Light red
+	Color(0.5, 1, 0.5, 1), # Light green
+	Color(0.5, 0.5, 1, 1), # Light blue
+	Color(1, 1, 0.5, 1), # Light yellow
+	Color(1, 0.5, 1, 1), # Light purple
+	Color(0.5, 1, 1, 1), # Light cyan
+]
+
+# Health multipliers for each color (same order as ENEMY_COLORS)
+const COLOR_HEALTH_MULTIPLIERS := [
+	1.5, # Red enemies are tougher
+	1.0, # Green enemies are normal
+	0.8, # Blue enemies are weaker
+	1.2, # Yellow enemies are slightly tough
+	1.3, # Purple enemies are moderately tough
+	0.9, # Cyan enemies are slightly weak
+]
+
 @onready var sprite := $Sprite2D
 
 func _ready() -> void:
 	# Assign a unique ID to this enemy
 	enemy_id = str(randi())
+	
+	# Choose random color index
+	var color_index = randi() % ENEMY_COLORS.size()
+	
+	# Apply random color tint
+	sprite.modulate = ENEMY_COLORS[color_index]
+	
+	# Set health based on color
+	max_health = int(max_health * COLOR_HEALTH_MULTIPLIERS[color_index])
 	current_health = max_health
+	
 	# Find the player node
 	target = get_tree().get_first_node_in_group("player")
 	# Create health label
