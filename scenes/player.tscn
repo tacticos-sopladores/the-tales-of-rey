@@ -136,7 +136,7 @@ one_shot = true
 [node name="ShootCooldownTimer" type="Timer" parent="CharacterBody2D"]
 one_shot = true
 
-[node name="InvulnerabilityTimer" type="Timer" parent="CharacterBody2D"]
+[node name="InvulnerabilityTimer" type="Timer" parent="CharacterBody2D" groups=["enemies"]]
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D"]

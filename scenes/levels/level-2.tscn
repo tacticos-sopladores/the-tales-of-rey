@@ -12,14 +12,14 @@
 
 [node name="Camera2D" type="Camera2D" parent="Level0"]
 position = Vector2(591, 356)
-zoom = Vector2(6, 6)
+zoom = Vector2(4, 4)
 script = ExtResource("2_an8di")
 
 [node name="Player" parent="Level0" instance=ExtResource("3_nqnf1")]
 position = Vector2(589, 352)
 
 [node name="EnemySpawner2" parent="Level0" instance=ExtResource("4_wy2kd")]
-spawn_radius = 100.0
+spawn_radius = 50.0
 min_spawn_time = 1.0
 max_spawn_time = 3.0
 max_enemies = 5

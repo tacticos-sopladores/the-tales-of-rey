@@ -11,13 +11,18 @@ config_version=5
 [application]
 
 config/name="the-tales-of-rey"
-run/main_scene="res://scenes/game.tscn"
+run/main_scene="res://scenes/main-menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://assets/rey.png"
 
 [display]
 
 window/size/mode=3
+
+[global_group]
+
+enemies=""
+borders=""
 
 [input]
 

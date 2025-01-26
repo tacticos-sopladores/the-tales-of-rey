@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-# TODO: make cooldown start after landing
-
 # Constants
 const JUMP_DURATION = 0.50
 const JUMP_HEIGHT = 20.0
@@ -11,7 +9,7 @@ const SQUISH_AMOUNT = 0.75 # Maximum squish (1 is no squish)
 @export var speed: float = 100.0
 @export var max_health: int = 100
 @export var projectile_scene: PackedScene
-@export var projectile_speed: float = 200.0
+@export var projectile_speed: float = 100.0
 @export var shoot_cooldown: float = 0.5
 @export var jump_cooldown: float = 0.75
 @export var invulnerability_duration: float = 1.0
@@ -74,10 +72,11 @@ func _physics_process(delta: float) -> void:
 		velocity.x = direction_x * speed
 		velocity.y = direction_y * speed
 
-	# Trigger the jump animation
+	# Handle jump action
 	if Input.is_action_just_pressed("jump") and can_jump:
 		jump()
 
+	# Handle shoot action
 	if Input.is_action_just_pressed("shoot") and can_shoot:
 		shoot(movement_vector)
 
@@ -125,6 +124,8 @@ func take_damage(damage_amount: int):
 		
 		if current_health <= 0:
 			die()
+	else:
+		print("Player was invulnerable!")
 
 func die() -> void:
 	print("Player died!")

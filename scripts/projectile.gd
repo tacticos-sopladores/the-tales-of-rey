@@ -11,10 +11,6 @@ extends Area2D
 var velocity := Vector2.ZERO
 
 func _ready():
-	#if is_player_projectile:
-	#	collision_mask = 2 # PlayerProjectiles Layer
-	#else:
-	#	collision_mask = 4 # EnemyProjectiles Layer
 	animation_player.play("grow")
 	projectile_lifetime_timer.start(lifetime)
 	
@@ -23,6 +19,7 @@ func _physics_process(delta):
 	velocity.y = sin(transform.get_rotation()) * speed
 	
 	position += velocity * delta
+	
 #func _on_area_entered(area):
 #	if is_player_projectile:
 #		if area.is_in_group("boss_hitbox"):

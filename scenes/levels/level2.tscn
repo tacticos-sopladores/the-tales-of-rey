@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://c48ahapuyed8e"]
 
 [ext_resource type="Texture2D" uid="uid://bnvwpidwk8ey4" path="res://assets/fondo.png" id="1_j14io"]
-[ext_resource type="PackedScene" path="res://scenes/enemy_spawner.tscn" id="2_wy2kd"]
+[ext_resource type="PackedScene" uid="uid://c2q8u6g4yqxkv" path="res://scenes/enemy_spawner.tscn" id="2_wy2kd"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_hf8x0"]
 
