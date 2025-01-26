@@ -1,21 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cxvfnbqba7pgj"]
+[gd_scene load_steps=6 format=3 uid="uid://cxvfnbqba7pgj"]
 
 [ext_resource type="Texture2D" uid="uid://bnvwpidwk8ey4" path="res://assets/fondo.png" id="1_j14io"]
-[ext_resource type="PackedScene" uid="uid://d21lx2c3ijnbx" path="res://scenes/environmetn/wind.tscn" id="2_3rip1"]
-
-[sub_resource type="GDScript" id="GDScript_dpum5"]
-script/source = "extends Node2D
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	queue_redraw()
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_hf8x0"]
 
@@ -29,7 +14,6 @@ normal = Vector2(-1, 0)
 normal = Vector2(0, 1)
 
 [node name="abstract_level" type="Node2D"]
-script = SubResource("GDScript_dpum5")
 
 [node name="BG" type="Sprite2D" parent="."]
 position = Vector2(580, 320)
@@ -55,7 +39,3 @@ shape = SubResource("WorldBoundaryShape2D_ac5qr")
 [node name="T" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(600, 0)
 shape = SubResource("WorldBoundaryShape2D_680nw")
-
-[node name="Wind" parent="." instance=ExtResource("2_3rip1")]
-rotation = 1.5708
-scale = Vector2(2, 2)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://c5e8vqevlbbsm"]
 
-[ext_resource type="Texture2D" path="res://assets/rey-shadow.png" id="1_3l3yp"]
+[ext_resource type="Texture2D" uid="uid://rsfj8ks5xjt2" path="res://assets/shadow.png" id="2_tclxp"]
 [ext_resource type="Script" path="res://scripts/shadow.gd" id="2_y0p5h"]
 
 [sub_resource type="Animation" id="Animation_xkiqi"]
@@ -43,7 +43,7 @@ _data = {
 script = ExtResource("2_y0p5h")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_3l3yp")
+texture = ExtResource("2_tclxp")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
 root_node = NodePath("../..")
