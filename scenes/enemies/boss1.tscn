@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cae45lk281j04"]
+[gd_scene load_steps=5 format=3 uid="uid://d1kmm0f8kgccs"]
 
-[ext_resource type="Texture2D" uid="uid://cn6mkpxldlfok" path="res://assets/icon.svg" id="1_goopm"]
-[ext_resource type="Script" path="res://scenes/enemies/boos.gd" id="1_nptue"]
-[ext_resource type="PackedScene" uid="uid://c5e8vqevlbbsm" path="res://scenes/shadow.tscn" id="3_lp81d"]
+[ext_resource type="Texture2D" uid="uid://cn6mkpxldlfok" path="res://assets/godot.svg" id="1_goopm"]
+[ext_resource type="PackedScene" uid="uid://dvjs47vnfstbt" path="res://scenes/shadow.tscn" id="3_lp81d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3b7sh"]
 size = Vector2(50, 50)
@@ -13,7 +12,6 @@ radius = 52.469
 [node name="Boss1" type="Node2D"]
 
 [node name="Boos" type="CharacterBody2D" parent="."]
-script = ExtResource("1_nptue")
 
 [node name="sprite" type="Sprite2D" parent="Boos"]
 visible = false

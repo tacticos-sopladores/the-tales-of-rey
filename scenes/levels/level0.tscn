@@ -1,25 +1,7 @@
-<<<<<<< HEAD:scenes/levels/level0.tscn
-[gd_scene load_steps=7 format=3 uid="uid://cxvfnbqba7pgj"]
+[gd_scene load_steps=7 format=3 uid="uid://cn60k4tdvpx86"]
 
-[ext_resource type="Texture2D" uid="uid://bnvwpidwk8ey4" path="res://assets/gradient.png" id="1_j14io"]
+[ext_resource type="Texture2D" uid="uid://ewmsiondl1ef" path="res://assets/gradient.png" id="1_j14io"]
 [ext_resource type="PackedScene" uid="uid://c2q8u6g4yqxkv" path="res://scenes/enemy_spawner.tscn" id="2_wy2kd"]
-=======
-[gd_scene load_steps=8 format=3 uid="uid://cxvfnbqba7pgj"]
-
-[sub_resource type="GDScript" id="GDScript_dpum5"]
-script/source = "extends Node2D
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	queue_redraw()
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
->>>>>>> origin/main:scenes/levels/abstract_level.tscn
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uquif"]
 
@@ -29,8 +11,7 @@ func _process(delta: float) -> void:
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_680nw"]
 
-[node name="abstract_level" type="Node2D"]
-script = SubResource("GDScript_dpum5")
+[node name="Level0" type="Node2D"]
 
 [node name="BG" type="Sprite2D" parent="."]
 position = Vector2(582, 319)

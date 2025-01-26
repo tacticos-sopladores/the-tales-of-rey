@@ -6,6 +6,9 @@
 =======
 [gd_scene load_steps=8 format=3 uid="uid://cxvfnbqba7pgj"]
 
+[ext_resource type="Texture2D" uid="uid://bnvwpidwk8ey4" path="res://assets/fondo.png" id="1_j14io"]
+[ext_resource type="PackedScene" uid="uid://d21lx2c3ijnbx" path="res://scenes/environmetn/wind.tscn" id="2_3rip1"]
+
 [sub_resource type="GDScript" id="GDScript_dpum5"]
 script/source = "extends Node2D
 
@@ -68,9 +71,16 @@ unique_name_in_owner = true
 position = Vector2(600, 0)
 rotation = 3.14159
 shape = SubResource("WorldBoundaryShape2D_680nw")
+<<<<<<< HEAD:scenes/levels/level0.tscn
 one_way_collision = true
 one_way_collision_margin = 16.0
 
 [node name="EnemySpawner" parent="." instance=ExtResource("2_wy2kd")]
 min_spawn_time = 1.0
 max_enemies = 20
+=======
+
+[node name="Wind" parent="." instance=ExtResource("2_3rip1")]
+rotation = 1.5708
+scale = Vector2(2, 2)
+>>>>>>> origin/main:scenes/levels/abstract_level.tscn
