@@ -23,6 +23,7 @@ window/size/mode=3
 
 enemies=""
 borders=""
+player=""
 
 [input]
 

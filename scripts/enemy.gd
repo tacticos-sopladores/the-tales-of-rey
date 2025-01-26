@@ -60,7 +60,7 @@ func _ready() -> void:
 	label.add_theme_font_size_override("font_size", 8)
 	add_child(label)
 	update_health_display()
-	print("Enemy ", enemy_id, " spawned")
+	# print("Enemy ", enemy_id, " spawned")
 
 func update_health_display() -> void:
 	var label = get_node("HealthLabel")
@@ -82,7 +82,7 @@ func _physics_process(delta: float) -> void:
 		
 		# Check if player is in detection range and enemy hasn't detected them yet
 		if distance_to_player <= detection_radius and !has_detected_player and current_state == State.SLEEP:
-			print("Enemy ", enemy_id, " detected player - Transitioning from SLEEP to APPEAR")
+			# print("Enemy ", enemy_id, " detected player - Transitioning from SLEEP to APPEAR")
 			current_state = State.APPEAR
 			current_frame = 0
 			state_timer = 0
@@ -104,9 +104,10 @@ func _physics_process(delta: float) -> void:
 			# Update state based on movement
 			var new_state = State.WALK if velocity.length() > 0 else State.IDLE
 			if new_state != current_state:
-				print("Enemy ", enemy_id, " state changing from ", State.keys()[current_state], " to ", State.keys()[new_state])
+				# print("Enemy ", enemy_id, " state changing from ", State.keys()[current_state], " to ", State.keys()[new_state])
 				current_state = new_state
 			move_and_slide()
+			
 		elif !has_detected_player:
 			velocity = Vector2.ZERO
 	
@@ -115,7 +116,7 @@ func _physics_process(delta: float) -> void:
 	match current_state:
 		State.APPEAR:
 			if state_timer >= appear_duration:
-				print("Enemy ", enemy_id, " APPEAR animation complete - Transitioning to IDLE")
+				# print("Enemy ", enemy_id, " APPEAR animation complete - Transitioning to IDLE")
 				state_timer = 0
 				current_state = State.IDLE
 		State.HURT:
@@ -128,7 +129,7 @@ func _physics_process(delta: float) -> void:
 				current_state = State.IDLE
 		State.DEATH:
 			if current_frame >= DEATH_FRAMES - 1:
-				print("Enemy ", enemy_id, " death animation complete - removing")
+				# print("Enemy ", enemy_id, " death animation complete - removing")
 				queue_free()
 			else:
 				# Keep playing death animation
@@ -183,10 +184,10 @@ func take_damage(amount: int) -> void:
 		
 	current_health -= amount
 	update_health_display()
-	print("Enemy ", enemy_id, " took damage, health: ", current_health, "/", max_health)
+	# print("Enemy ", enemy_id, " took damage, health: ", current_health, "/", max_health)
 	
 	if current_health <= 0:
-		print("Enemy ", enemy_id, " died - starting death animation")
+		# print("Enemy ", enemy_id, " died - starting death animation")
 		is_dead = true
 		current_state = State.DEATH
 		current_frame = 0

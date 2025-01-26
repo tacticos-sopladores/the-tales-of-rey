@@ -20,6 +20,7 @@ var can_move := true
 var can_shoot := true
 var last_angle := 0.0
 var is_invulnerable := false
+var is_dead := false
 
 @onready var jump_timer = $JumpTimer
 @onready var jump_cooldown_timer = $JumpCooldownTimer
@@ -43,6 +44,8 @@ func _ready():
 func update_health_display() -> void:
 	var label = get_node("HealthLabel")
 	if label:
+		if is_dead:
+			label.text = ""
 		label.text = str(current_health) + "/" + str(max_health)
 		# Position the label above the player
 		label.position = Vector2(-20, -30)
@@ -77,10 +80,11 @@ func _physics_process(delta: float) -> void:
 		jump()
 
 	# Handle shoot action
-	if Input.is_action_just_pressed("shoot") and can_shoot:
+	if Input.is_action_just_pressed("shoot") and can_shoot and not is_dead:
 		shoot(movement_vector)
 
-	move_and_slide()
+	if not is_dead:
+		move_and_slide()
 
 func shoot(direction: Vector2):
 	if projectile_scene == null:
@@ -103,6 +107,7 @@ func shoot(direction: Vector2):
 func jump() -> void:
 	can_jump = false
 	can_move = false
+	is_invulnerable = true
 	jump_timer.start(JUMP_DURATION)
 	shadow.play_animation(1 / JUMP_DURATION)
 	animation_player.speed_scale = 1 / JUMP_DURATION
@@ -128,11 +133,12 @@ func take_damage(damage_amount: int):
 		print("Player was invulnerable!")
 
 func die() -> void:
-	print("Player died!")
-	queue_free() # Or other death logic (e.g., game over screen)
+	is_dead = true
+	self.visible = false
 
 func _on_jump_timer_timeout() -> void:
 	can_move = true
+	is_invulnerable = false
 	jump_cooldown_timer.start(jump_cooldown)
 	
 func _on_jump_cooldown_timer_timeout() -> void:

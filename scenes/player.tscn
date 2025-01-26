@@ -41,9 +41,6 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_g4btl"]
-radius = 3.16228
-
 [sub_resource type="Animation" id="Animation_ax15b"]
 length = 0.001
 tracks/0/type = "value"
@@ -61,7 +58,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../CollisionShape2D:disabled")
+tracks/1/path = NodePath("../Area2D/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -92,24 +89,25 @@ _data = {
 "jump": SubResource("Animation_b7pm2")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_g4btl"]
+radius = 6.0
+
 [node name="Player" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
+collision_layer = 255
 script = ExtResource("1_htb0k")
+max_health = 10
 projectile_scene = ExtResource("2_25sf6")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
-z_index = 5
+z_index = 3
 sprite_frames = SubResource("SpriteFrames_2ksxx")
 autoplay = "default"
 frame_progress = 0.540854
 
 [node name="Muzzle" type="Node2D" parent="CharacterBody2D/Sprite2D"]
 position = Vector2(8, -14)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(0, 5)
-shape = SubResource("CircleShape2D_g4btl")
 
 [node name="Shadow" parent="CharacterBody2D" instance=ExtResource("3_br3t8")]
 position = Vector2(0, 7)
@@ -124,7 +122,7 @@ one_shot = true
 [node name="ShootCooldownTimer" type="Timer" parent="CharacterBody2D"]
 one_shot = true
 
-[node name="InvulnerabilityTimer" type="Timer" parent="CharacterBody2D" groups=["enemies"]]
+[node name="InvulnerabilityTimer" type="Timer" parent="CharacterBody2D" groups=["enemies", "player"]]
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D"]
@@ -132,6 +130,20 @@ root_node = NodePath("../ShootCooldownTimer")
 libraries = {
 "": SubResource("AnimationLibrary_xjf3j")
 }
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D"]
+position = Vector2(0, 5)
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+light_mask = 7
+shape = SubResource("CircleShape2D_g4btl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+light_mask = 7
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_g4btl")
 
 [connection signal="timeout" from="CharacterBody2D/JumpTimer" to="CharacterBody2D" method="_on_jump_timer_timeout"]
 [connection signal="timeout" from="CharacterBody2D/JumpCooldownTimer" to="CharacterBody2D" method="_on_jump_cooldown_timer_timeout"]
