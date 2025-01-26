@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://dvjs47vnfstbt"]
 
-[ext_resource type="Texture2D" uid="uid://rsfj8ks5xjt2" path="res://assets/rey-shadow.png" id="1_3l3yp"]
+[ext_resource type="Texture2D" path="res://assets/rey-shadow.png" id="1_3l3yp"]
 [ext_resource type="Script" path="res://scripts/shadow.gd" id="2_y0p5h"]
 
 [sub_resource type="Animation" id="Animation_xkiqi"]
