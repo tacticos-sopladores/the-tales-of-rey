@@ -106,7 +106,7 @@ _data = {
 
 [node name="Player" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["player"]]
 script = ExtResource("1_htb0k")
 projectile_scene = ExtResource("2_25sf6")
 
@@ -136,6 +136,9 @@ one_shot = true
 [node name="ShootCooldownTimer" type="Timer" parent="CharacterBody2D"]
 one_shot = true
 
+[node name="InvulnerabilityTimer" type="Timer" parent="CharacterBody2D"]
+one_shot = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D"]
 root_node = NodePath("../ShootCooldownTimer")
 libraries = {
@@ -145,3 +148,4 @@ libraries = {
 [connection signal="timeout" from="CharacterBody2D/JumpTimer" to="CharacterBody2D" method="_on_jump_timer_timeout"]
 [connection signal="timeout" from="CharacterBody2D/JumpCooldownTimer" to="CharacterBody2D" method="_on_jump_cooldown_timer_timeout"]
 [connection signal="timeout" from="CharacterBody2D/ShootCooldownTimer" to="CharacterBody2D" method="_on_shoot_cooldown_timer_timeout"]
+[connection signal="timeout" from="CharacterBody2D/InvulnerabilityTimer" to="CharacterBody2D" method="_on_invulnerability_timer_timeout"]

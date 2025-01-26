@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Area2D
 
 @export var speed: float
 @export var lifetime: float
@@ -7,6 +7,8 @@ extends CharacterBody2D
 
 @onready var projectile_lifetime_timer := $ProjectileLifetimeTimer
 @onready var animation_player := $AnimationPlayer
+
+var velocity := Vector2.ZERO
 
 func _ready():
 	#if is_player_projectile:
@@ -17,10 +19,10 @@ func _ready():
 	projectile_lifetime_timer.start(lifetime)
 	
 func _physics_process(delta):
-	velocity.x += cos(transform.get_rotation()) * speed * delta
-	velocity.y += sin(transform.get_rotation()) * speed * delta
+	velocity.x = cos(transform.get_rotation()) * speed
+	velocity.y = sin(transform.get_rotation()) * speed
 	
-	move_and_slide()
+	position += velocity * delta
 #func _on_area_entered(area):
 #	if is_player_projectile:
 #		if area.is_in_group("boss_hitbox"):
@@ -41,4 +43,3 @@ func _on_projectile_lifetime_timer_timeout() -> void:
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "pop":
 		queue_free()
-		

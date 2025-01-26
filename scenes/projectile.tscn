@@ -82,8 +82,8 @@ _data = {
 "pop": SubResource("Animation_nk2sm")
 }
 
-[node name="Projectile" type="CharacterBody2D"]
-collision_layer = 2
+[node name="Projectile" type="Area2D"]
+collision_layer = 4
 collision_mask = 2
 script = ExtResource("1_0v4sd")
 speed = 200.0

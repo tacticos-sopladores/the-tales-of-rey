@@ -3,8 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://cxvfnbqba7pgj" path="res://scenes/levels/level0.tscn" id="1_qr7mr"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="2_an8di"]
 [ext_resource type="PackedScene" uid="uid://cqn86787akru1" path="res://scenes/player.tscn" id="3_nqnf1"]
-[ext_resource type="PackedScene" path="res://scenes/enemy_spawner.tscn" id="4_wy2kd"]
-[ext_resource type="PackedScene" uid="uid://cwg0hlo2ifu4p" path="res://scenes/enemy.tscn" id="5_8lgwe"]
+[ext_resource type="PackedScene" uid="uid://c2q8u6g4yqxkv" path="res://scenes/enemy_spawner.tscn" id="4_wy2kd"]
+[ext_resource type="Script" path="res://scripts/enemy_counter.gd" id="6_ixr2p"]
 
 [node name="Level-2" type="Node2D"]
 
@@ -24,5 +24,13 @@ min_spawn_time = 1.0
 max_spawn_time = 3.0
 max_enemies = 5
 
-[node name="Enemy" parent="Level0" instance=ExtResource("5_8lgwe")]
-position = Vector2(441, 362)
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="EnemyCounter" type="Label" parent="CanvasLayer"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 216.0
+offset_bottom = 82.0
+theme_override_font_sizes/font_size = 48
+text = "Enemies: 0"
+script = ExtResource("6_ixr2p")
