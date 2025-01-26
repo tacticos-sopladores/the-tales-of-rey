@@ -1,9 +1,45 @@
-[gd_scene load_steps=9 format=3 uid="uid://cqn86787akru1"]
+[gd_scene load_steps=14 format=3 uid="uid://cqn86787akru1"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_htb0k"]
-[ext_resource type="Texture2D" uid="uid://dy0wpi8qvamb3" path="res://assets/rey.png" id="2_4ddr5"]
-[ext_resource type="PackedScene" uid="uid://df37ilajfbu8k" path="res://scenes/projectile.tscn" id="2_25sf6"]
-[ext_resource type="PackedScene" uid="uid://c5e8vqevlbbsm" path="res://scenes/shadow.tscn" id="3_br3t8"]
+[ext_resource type="PackedScene" uid="uid://sjb77xsfymbk" path="res://scenes/projectile.tscn" id="2_25sf6"]
+[ext_resource type="PackedScene" uid="uid://dvjs47vnfstbt" path="res://scenes/shadow.tscn" id="3_br3t8"]
+[ext_resource type="Texture2D" uid="uid://qkjv0yfs7543" path="res://assets/rey-idle-sheet.png" id="3_prmin"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqcpa"]
+atlas = ExtResource("3_prmin")
+region = Rect2(0, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8c1g"]
+atlas = ExtResource("3_prmin")
+region = Rect2(80, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0lo1b"]
+atlas = ExtResource("3_prmin")
+region = Rect2(160, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h30n2"]
+atlas = ExtResource("3_prmin")
+region = Rect2(240, 0, 80, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2ksxx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vqcpa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b8c1g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0lo1b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h30n2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g4btl"]
 radius = 3.16228
@@ -21,6 +57,45 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_b7pm2"]
+resource_name = "jump"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(0.5, 2, 0),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -20), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_b7pm2"]
@@ -50,27 +125,31 @@ _data = {
 script = ExtResource("1_htb0k")
 projectile_scene = ExtResource("2_25sf6")
 
+[node name="Sprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+z_index = 5
+sprite_frames = SubResource("SpriteFrames_2ksxx")
+autoplay = "default"
+frame_progress = 0.540854
+
+[node name="Muzzle" type="Node2D" parent="CharacterBody2D/Sprite2D"]
+position = Vector2(8, -14)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_g4btl")
-
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
-z_index = 5
-texture = ExtResource("2_4ddr5")
-
-[node name="Muzzle" type="Node2D" parent="CharacterBody2D"]
-position = Vector2(9, -11)
 
 [node name="Shadow" parent="CharacterBody2D" instance=ExtResource("3_br3t8")]
 position = Vector2(0, 7)
 scale = Vector2(0.75, 0.75)
 
+[node name="JumpTimer" type="Timer" parent="CharacterBody2D"]
+one_shot = true
+
 [node name="JumpCooldownTimer" type="Timer" parent="CharacterBody2D"]
-wait_time = 0.75
 one_shot = true
 
 [node name="ShootCooldownTimer" type="Timer" parent="CharacterBody2D"]
-wait_time = 0.5
+one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D"]
 root_node = NodePath("../ShootCooldownTimer")
@@ -78,5 +157,6 @@ libraries = {
 "": SubResource("AnimationLibrary_xjf3j")
 }
 
+[connection signal="timeout" from="CharacterBody2D/JumpTimer" to="CharacterBody2D" method="_on_jump_timer_timeout"]
 [connection signal="timeout" from="CharacterBody2D/JumpCooldownTimer" to="CharacterBody2D" method="_on_jump_cooldown_timer_timeout"]
 [connection signal="timeout" from="CharacterBody2D/ShootCooldownTimer" to="CharacterBody2D" method="_on_shoot_cooldown_timer_timeout"]
