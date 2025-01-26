@@ -10,7 +10,6 @@
 
 [node name="Camera2D" type="Camera2D" parent="Level0"]
 position = Vector2(591, 356)
-zoom = Vector2(2, 2)
 script = ExtResource("3_nxr0u")
 
 [node name="Player" parent="Level0" instance=ExtResource("2_1jbku")]

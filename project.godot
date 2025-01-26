@@ -15,6 +15,10 @@ run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://assets/rey.png"
 
+[display]
+
+window/size/mode=3
+
 [input]
 
 move-left={

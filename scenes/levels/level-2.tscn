@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://cxloj63pe5fgm"]
+
+[ext_resource type="PackedScene" uid="uid://cxvfnbqba7pgj" path="res://scenes/levels/level0.tscn" id="1_qr7mr"]
+[ext_resource type="Script" path="res://scripts/camera.gd" id="2_an8di"]
+[ext_resource type="PackedScene" uid="uid://cqn86787akru1" path="res://scenes/player.tscn" id="3_nqnf1"]
+[ext_resource type="PackedScene" path="res://scenes/enemy_spawner.tscn" id="4_wy2kd"]
+[ext_resource type="PackedScene" uid="uid://cwg0hlo2ifu4p" path="res://scenes/enemy.tscn" id="5_8lgwe"]
+
+[node name="Level-2" type="Node2D"]
+
+[node name="Level0" parent="." instance=ExtResource("1_qr7mr")]
+
+[node name="Camera2D" type="Camera2D" parent="Level0"]
+position = Vector2(591, 356)
+zoom = Vector2(6, 6)
+script = ExtResource("2_an8di")
+
+[node name="Player" parent="Level0" instance=ExtResource("3_nqnf1")]
+position = Vector2(589, 352)
+
+[node name="EnemySpawner2" parent="Level0" instance=ExtResource("4_wy2kd")]
+spawn_radius = 100.0
+min_spawn_time = 1.0
+max_spawn_time = 3.0
+max_enemies = 5
+
+[node name="Enemy" parent="Level0" instance=ExtResource("5_8lgwe")]
+position = Vector2(441, 362)

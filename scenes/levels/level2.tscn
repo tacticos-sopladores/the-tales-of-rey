@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cxvfnbqba7pgj"]
+[gd_scene load_steps=7 format=3 uid="uid://c48ahapuyed8e"]
 
 [ext_resource type="Texture2D" uid="uid://bnvwpidwk8ey4" path="res://assets/fondo.png" id="1_j14io"]
 [ext_resource type="PackedScene" path="res://scenes/enemy_spawner.tscn" id="2_wy2kd"]
@@ -14,7 +14,7 @@ normal = Vector2(-1, 0)
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_680nw"]
 normal = Vector2(0, 1)
 
-[node name="Level0" type="Node2D"]
+[node name="Level2" type="Node2D"]
 
 [node name="BG" type="Sprite2D" parent="."]
 position = Vector2(580, 320)
