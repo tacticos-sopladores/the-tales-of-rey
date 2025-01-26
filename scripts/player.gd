@@ -117,7 +117,6 @@ func take_damage(damage_amount: int):
 	if not is_invulnerable:
 		current_health -= damage_amount
 		update_health_display()
-		print("Player took ", damage_amount, " damage. Current health: ", current_health)
 		
 		# Flash the sprite white
 		sprite.modulate = Color(1.5, 1.5, 1.5, 1) # Slightly white
@@ -129,8 +128,6 @@ func take_damage(damage_amount: int):
 		
 		if current_health <= 0:
 			die()
-	else:
-		print("Player was invulnerable!")
 
 func die() -> void:
 	is_dead = true

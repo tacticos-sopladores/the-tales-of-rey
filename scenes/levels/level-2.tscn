@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cxloj63pe5fgm"]
+[gd_scene load_steps=7 format=3 uid="uid://cxloj63pe5fgm"]
 
-[ext_resource type="PackedScene" uid="uid://cxvfnbqba7pgj" path="res://scenes/levels/level0.tscn" id="1_qr7mr"]
+[ext_resource type="PackedScene" uid="uid://cn60k4tdvpx86" path="res://scenes/levels/level0.tscn" id="1_qr7mr"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="2_an8di"]
 [ext_resource type="PackedScene" uid="uid://cqn86787akru1" path="res://scenes/player.tscn" id="3_nqnf1"]
 [ext_resource type="PackedScene" uid="uid://c2q8u6g4yqxkv" path="res://scenes/enemy_spawner.tscn" id="4_wy2kd"]
 [ext_resource type="Script" path="res://scripts/enemy_counter.gd" id="6_ixr2p"]
+[ext_resource type="Texture2D" uid="uid://tqghaa6rqrkj" path="res://assets/kitchen.png" id="6_xnanu"]
 
 [node name="Level-2" type="Node2D"]
 
@@ -27,10 +28,22 @@ max_enemies = 5
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="EnemyCounter" type="Label" parent="CanvasLayer"]
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 216.0
-offset_bottom = 82.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -124.0
+offset_top = -67.0
+offset_right = 124.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_font_sizes/font_size = 48
 text = "Enemies: 0"
 script = ExtResource("6_ixr2p")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -3
+position = Vector2(570, 227)
+scale = Vector2(2.2876, 2.2876)
+texture = ExtResource("6_xnanu")

@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=3 uid="uid://cn60k4tdvpx86"]
+[gd_scene load_steps=6 format=3 uid="uid://cn60k4tdvpx86"]
 
-[ext_resource type="Texture2D" uid="uid://ewmsiondl1ef" path="res://assets/gradient.png" id="1_j14io"]
 [ext_resource type="PackedScene" uid="uid://c2q8u6g4yqxkv" path="res://scenes/enemy_spawner.tscn" id="2_wy2kd"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uquif"]
@@ -12,11 +11,6 @@
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_680nw"]
 
 [node name="Level0" type="Node2D"]
-
-[node name="BG" type="Sprite2D" parent="."]
-position = Vector2(582, 319)
-scale = Vector2(2, 2)
-texture = ExtResource("1_j14io")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

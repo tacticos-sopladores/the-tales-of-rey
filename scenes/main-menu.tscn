@@ -1,22 +1,17 @@
 [gd_scene load_steps=3 format=3 uid="uid://d3nawve8w3nti"]
 
 [ext_resource type="Script" path="res://scripts/main_menu.gd" id="1_lm7gy"]
-[ext_resource type="Texture2D" uid="uid://bbs1jps2hgs55" path="res://assets/enemy_carrot_sheet.png" id="2_wwy1g"]
+[ext_resource type="Texture2D" uid="uid://xgdt78n4bxw2" path="res://assets/rey_background.png" id="2_47lu4"]
 
 [node name="MainMenu" type="Node"]
 script = ExtResource("1_lm7gy")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_wwy1g")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -120.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = 121.0
+offset_left = -200.0
+offset_bottom = 150.0
 grow_horizontal = 0
 
 [node name="StartButton" type="Button" parent="VBoxContainer"]
@@ -36,6 +31,27 @@ layout_mode = 2
 text = "Quit"
 flat = true
 alignment = 2
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="Control"]
+z_index = -10
+position = Vector2(77, 91)
+scale = Vector2(0.732971, 0.732971)
+texture = ExtResource("2_47lu4")
+region_rect = Rect2(0, 0, 2048, 2048)
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
