@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://cqn86787akru1"]
+[gd_scene load_steps=15 format=3 uid="uid://cqn86787akru1"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_htb0k"]
 [ext_resource type="PackedScene" uid="uid://sjb77xsfymbk" path="res://scenes/projectile.tscn" id="2_25sf6"]
 [ext_resource type="PackedScene" uid="uid://dvjs47vnfstbt" path="res://scenes/shadow.tscn" id="3_br3t8"]
 [ext_resource type="Texture2D" uid="uid://qkjv0yfs7543" path="res://assets/rey-idle-sheet.png" id="3_prmin"]
+[ext_resource type="PackedScene" uid="uid://b4e3fq8j6rg6k" path="res://scenes/weapon_manager.tscn" id="5_xk3m4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vqcpa"]
 atlas = ExtResource("3_prmin")
@@ -167,6 +168,8 @@ shape = SubResource("CircleShape2D_g4btl")
 light_mask = 7
 position = Vector2(0, 5)
 shape = SubResource("CircleShape2D_g4btl")
+
+[node name="WeaponManager" parent="CharacterBody2D" instance=ExtResource("5_xk3m4")]
 
 [connection signal="timeout" from="CharacterBody2D/JumpTimer" to="CharacterBody2D" method="_on_jump_timer_timeout"]
 [connection signal="timeout" from="CharacterBody2D/JumpCooldownTimer" to="CharacterBody2D" method="_on_jump_cooldown_timer_timeout"]

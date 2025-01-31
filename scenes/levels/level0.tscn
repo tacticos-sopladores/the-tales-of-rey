@@ -1,6 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cn60k4tdvpx86"]
-
-[ext_resource type="PackedScene" uid="uid://c2q8u6g4yqxkv" path="res://scenes/enemy_spawner.tscn" id="2_wy2kd"]
+[gd_scene load_steps=5 format=3 uid="uid://cn60k4tdvpx86"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uquif"]
 
@@ -45,7 +43,3 @@ rotation = 3.14159
 shape = SubResource("WorldBoundaryShape2D_680nw")
 one_way_collision = true
 one_way_collision_margin = 16.0
-
-[node name="EnemySpawner" parent="." instance=ExtResource("2_wy2kd")]
-min_spawn_time = 1.0
-max_enemies = 20

@@ -4,6 +4,8 @@ extends CharacterBody2D
 @export var max_health: int = 30
 @export var damage: int = 10
 @export var detection_radius: float = 100.0 # Distance at which enemy detects player
+@export var xp_reward: int = 20 # Base XP reward for killing this enemy
+@export var max_sleep_duration: float = 10.0 # Maximum time to stay asleep
 
 enum State {SLEEP, APPEAR, IDLE, WALK, ATTACK, HURT, DEATH}
 enum Direction {DOWN, SIDE, UP}
@@ -22,6 +24,7 @@ var hurt_duration := 0.5
 var attack_duration := 0.6
 var is_dead := false
 var has_detected_player := false # Track if player has been detected
+var sleep_timer: float = 0.0 # Track how long we've been sleeping
 
 # Animation frames configuration
 const FRAMES_PER_ROW := 7
@@ -66,19 +69,29 @@ const COLOR_HEALTH_MULTIPLIERS := [
 
 @onready var sprite := $Sprite2D
 
+var xp_orb_scene: PackedScene
+var original_color: Color
+
 func _ready() -> void:
+	# Load the XP orb scene
+	xp_orb_scene = preload("res://scenes/pickups/xp_orb.tscn")
+	
+	# Add to enemies group
+	add_to_group("enemies")
+	
 	# Assign a unique ID to this enemy
 	enemy_id = str(randi())
 	
-	# Choose random color index
-	var color_index = randi() % ENEMY_COLORS.size()
-	
-	# Apply random color tint
-	sprite.modulate = ENEMY_COLORS[color_index]
+	# Store the initial color as original_color (will be set by spawner)
+	original_color = sprite.modulate
 	
 	# Set health based on color
-	max_health = int(max_health * COLOR_HEALTH_MULTIPLIERS[color_index])
-	current_health = max_health
+	var color_index = ENEMY_COLORS.find(original_color)
+	if color_index != -1:
+		max_health = int(max_health * COLOR_HEALTH_MULTIPLIERS[color_index])
+		current_health = max_health
+	else:
+		current_health = max_health
 	
 	# Find the player node
 	target = get_tree().get_first_node_in_group("player")
@@ -110,6 +123,17 @@ func _physics_process(delta: float) -> void:
 	if target and !is_dead:
 		var distance_to_player = global_position.distance_to(target.global_position)
 		
+		# Update sleep timer if we're sleeping
+		if current_state == State.SLEEP:
+			sleep_timer += delta
+			if sleep_timer >= max_sleep_duration:
+				# Force wake up after max sleep duration
+				current_state = State.APPEAR
+				current_frame = 0
+				state_timer = 0
+				has_detected_player = true
+				sleep_timer = 0
+		
 		# Check if player is in detection range and enemy hasn't detected them yet
 		if distance_to_player <= detection_radius and !has_detected_player and current_state == State.SLEEP:
 			# print("Enemy ", enemy_id, " detected player - Transitioning from SLEEP to APPEAR")
@@ -117,6 +141,7 @@ func _physics_process(delta: float) -> void:
 			current_frame = 0
 			state_timer = 0
 			has_detected_player = true
+			sleep_timer = 0
 		
 		# Only move if player has been detected and appear animation is complete
 		if has_detected_player and current_state not in [State.SLEEP, State.HURT, State.ATTACK, State.APPEAR, State.DEATH]:
@@ -222,6 +247,21 @@ func take_damage(amount: int) -> void:
 		current_state = State.DEATH
 		current_frame = 0
 		state_timer = 0
+		
+		# Notify round manager
+		var round_manager = get_node("/root/Level-2/RoundManager")
+		if round_manager:
+			round_manager.enemy_defeated()
+		
+		# Spawn XP orb
+		var xp_orb = xp_orb_scene.instantiate()
+		xp_orb.xp_value = xp_reward
+		# Use the larger XP orb sprite for regular enemies
+		var sprite = xp_orb.get_node("Sprite2D")
+		sprite.texture = load("res://assets/xp-orbs/2.png")
+		sprite.scale = Vector2(0.75, 0.75)
+		xp_orb.global_position = global_position
+		get_parent().call_deferred("add_child", xp_orb)
 	else:
 		current_state = State.HURT
 		current_frame = 0

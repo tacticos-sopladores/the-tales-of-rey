@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cxloj63pe5fgm"]
+[gd_scene load_steps=10 format=3 uid="uid://cxloj63pe5fgm"]
 
 [ext_resource type="PackedScene" uid="uid://cn60k4tdvpx86" path="res://scenes/levels/level0.tscn" id="1_qr7mr"]
 [ext_resource type="Script" path="res://scripts/camera.gd" id="2_an8di"]
@@ -6,28 +6,68 @@
 [ext_resource type="PackedScene" uid="uid://c2q8u6g4yqxkv" path="res://scenes/enemy_spawner.tscn" id="4_wy2kd"]
 [ext_resource type="Script" path="res://scripts/enemy_counter.gd" id="6_ixr2p"]
 [ext_resource type="Texture2D" uid="uid://tqghaa6rqrkj" path="res://assets/kitchen.png" id="6_xnanu"]
+[ext_resource type="PackedScene" uid="uid://b8j6c3q4y5r7m" path="res://scenes/ui/xp_bar.tscn" id="7_xpbar"]
+[ext_resource type="Script" path="res://scripts/round_manager.gd" id="8_round"]
+[ext_resource type="Script" path="res://scripts/round_display.gd" id="9_round"]
 
 [node name="Level-2" type="Node2D"]
+
+[node name="RoundManager" type="Node" parent="."]
+script = ExtResource("8_round")
 
 [node name="Level0" parent="." instance=ExtResource("1_qr7mr")]
 
 [node name="Camera2D" type="Camera2D" parent="Level0"]
 position = Vector2(591, 356)
-zoom = Vector2(4, 4)
+zoom = Vector2(5, 5)
 script = ExtResource("2_an8di")
 
 [node name="Player" parent="Level0" instance=ExtResource("3_nqnf1")]
 position = Vector2(589, 352)
 
 [node name="EnemySpawner2" parent="Level0" instance=ExtResource("4_wy2kd")]
-spawn_radius = 50.0
 min_spawn_time = 1.0
 max_spawn_time = 3.0
-max_enemies = 5
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="RoundDisplay" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 70.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+text = "Round 1 - Enemies: 5"
+horizontal_alignment = 1
+script = ExtResource("9_round")
+
+[node name="TimeDisplay" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = 70.0
+offset_right = 200.0
+offset_bottom = 130.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 48
+text = "1:00"
+horizontal_alignment = 1
+script = ExtResource("9_round")
+
+[node name="XPBar" parent="CanvasLayer" instance=ExtResource("7_xpbar")]
+
 [node name="EnemyCounter" type="Label" parent="CanvasLayer"]
+visible = false
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0

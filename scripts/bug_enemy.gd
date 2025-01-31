@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var detection_radius: float = 150.0
 @export var knockback_force: float = 200.0 # How strong the knockback is
 @export var knockback_duration: float = 0.2 # How long the knockback lasts
+@export var xp_reward: int = 15 # Base XP reward for killing this enemy
 
 var enemy_id: String
 var current_health: int
@@ -42,19 +43,16 @@ const COLOR_HEALTH_MULTIPLIERS := [
 
 @onready var sprite := $Sprite2D
 
+var xp_orb_scene: PackedScene
+
 func _ready() -> void:
+	# Load the XP orb scene
+	xp_orb_scene = preload("res://scenes/pickups/xp_orb.tscn")
+	
+	# Add to enemies group
+	add_to_group("enemies")
+	
 	enemy_id = str(randi())
-	
-	# Choose random color index
-	var color_index = randi() % ENEMY_COLORS.size()
-	
-	# Apply random color tint
-	sprite.modulate = ENEMY_COLORS[color_index]
-	original_color = ENEMY_COLORS[color_index]
-	
-	# Set health based on color
-	max_health = int(max_health * COLOR_HEALTH_MULTIPLIERS[color_index])
-	current_health = max_health
 	
 	# Find the player node
 	target = get_tree().get_first_node_in_group("player")
@@ -65,6 +63,18 @@ func _ready() -> void:
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.add_theme_font_size_override("font_size", 8)
 	add_child(label)
+	
+	# Store the initial color as original_color (will be set by spawner)
+	original_color = sprite.modulate
+	
+	# Set health based on color
+	var color_index = ENEMY_COLORS.find(original_color)
+	if color_index != -1:
+		max_health = int(max_health * COLOR_HEALTH_MULTIPLIERS[color_index])
+		current_health = max_health
+	else:
+		current_health = max_health
+	
 	update_health_display()
 
 func update_health_display() -> void:
@@ -129,6 +139,17 @@ func take_damage(amount: int) -> void:
 	
 	if current_health <= 0:
 		is_dead = true
+		
+		# Notify round manager
+		var round_manager = get_node("/root/Level-2/RoundManager")
+		if round_manager:
+			round_manager.enemy_defeated()
+		
+		# Spawn XP orb
+		var xp_orb = xp_orb_scene.instantiate()
+		xp_orb.xp_value = xp_reward
+		xp_orb.global_position = global_position
+		get_parent().call_deferred("add_child", xp_orb)
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.get_script() and area.is_player_projectile:
